@@ -20,8 +20,6 @@ pipeline {
       steps {
         sh 'rm trufflehog || true'
         sh 'docker run ghcr.io/trufflesecurity/trufflehog --json https://github.com/HydMonk/MyProject.git > trufflehog'
-#docker run -it -v "$PWD:/pwd" ghcr.io/trufflesecurity/trufflehog:latest github --repo https://github.com/trufflesecurity/test_keys --debug 
-#ghcr.io/trufflesecurity/trufflehog
         sh 'cat trufflehog'
       }
     }
