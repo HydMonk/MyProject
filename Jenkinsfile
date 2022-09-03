@@ -5,6 +5,7 @@ pipeline {
  }
  stages {
   stage ('Initialize') {
+
    steps {
     sh '''
 	echo "PATH = $(PATH)"
@@ -12,10 +13,22 @@ pipeline {
      '''
     }
    }
+
   stage ('Build') {
    steps {
    sh 'mvn clean package'
    }
    }
+
+
+   stage ('Deploy-To-Tomcat') {
+            steps {
+           sshagent(['tomcat']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.war one@192.168.112.129:/opt/tomcat/webapps/webapp.war'
+              }      
+           }       
+    }
+
   }
+
  }
